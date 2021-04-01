@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const ObjectId = require("mongodb").ObjectID;
+const ObjectId = require("mongodb").ObjectId;
 require("dotenv").config();
 const app = express();
 app.use(express.json());
@@ -18,6 +18,10 @@ client.connect((err) => {
     .db(`${process.env.DB_NAME}`)
     .collection(`${process.env.DB_COLLECTION}`);
 
+  const ordersCollection = client
+    .db(`${process.env.DB_NAME}`)
+    .collection(`orders`);
+
   app.post("/addProduct", (req, res) => {
     const product = req.body;
     productsCollection.insertOne(product).then((result) => {
@@ -32,12 +36,36 @@ client.connect((err) => {
     });
   });
 
+  app.get("/product/:id", (req, res) => {
+    productsCollection
+      .find({ _id: ObjectId(req.params.id) })
+      .toArray((err, documents) => {
+        res.send(documents[0]);
+      });
+  });
+
   app.delete("/delete/:id", (req, res) => {
     productsCollection
       .deleteOne({ _id: ObjectId(req.params.id) })
       .then((result) => {
         res.send(result.deletedCount > 0);
         console.log("deleted");
+      });
+  });
+
+  app.post("/addOder", (req, res) => {
+    const newOrder = req.body;
+    ordersCollection.insertOne(newOrder).then((result) => {
+      res.send(result.insertedCount > 0);
+    });
+    console.log(newOrder);
+  });
+
+  app.get("/orders", (req, res) => {
+    ordersCollection
+      .find({ email: req.query.email })
+      .toArray((err, document) => {
+        res.send(document);
       });
   });
   console.log("MongoDB Connected");
