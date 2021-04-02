@@ -23,4 +23,4 @@ After the **node_modules** folder is created you should type
 
 ## Client Side Repo Link
 
-### [Client Side Repo]("https://github.com/Porgramming-Hero-web-course/full-stack-client-coderDaiyan" "Client Side Code")
+[Client Side Repo]("https://github.com/Porgramming-Hero-web-course/full-stack-client-coderDaiyan")
