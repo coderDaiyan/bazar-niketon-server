@@ -2,7 +2,7 @@
 
 ### This is the server side code for Bazar Niketon Project.You'll find the
 
-    **Client Side Code** Below.
+**Client Side Code** Below.
 
 <br>
 <br>
