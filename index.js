@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(cors());
 const port = 4000;
 const MongoClient = require("mongodb").MongoClient;
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.b8m43.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://bazarUser:bazaruser12345@cluster0.b8m43.mongodb.net/bazarNiketonDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -15,11 +15,11 @@ const client = new MongoClient(uri, {
 
 client.connect((err) => {
   const productsCollection = client
-    .db(`${process.env.DB_NAME}`)
-    .collection(`${process.env.DB_COLLECTION}`);
+    .db("bazarNiketonDatabase")
+    .collection("products");
 
   const ordersCollection = client
-    .db(`${process.env.DB_NAME}`)
+    .db("bazarNiketonDatabase")
     .collection(`orders`);
 
   app.post("/addProduct", (req, res) => {
@@ -58,14 +58,13 @@ client.connect((err) => {
     ordersCollection.insertOne(newOrder).then((result) => {
       res.send(result.insertedCount > 0);
     });
-    console.log(newOrder);
   });
 
   app.get("/orders", (req, res) => {
     ordersCollection
       .find({ email: req.query.email })
       .toArray((err, document) => {
-        res.send(document);
+        res.send(document[0]);
       });
   });
   console.log("MongoDB Connected");
