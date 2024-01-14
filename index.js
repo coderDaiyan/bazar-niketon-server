@@ -8,10 +8,7 @@ app.use(cors());
 const port = 4000;
 const MongoClient = require("mongodb").MongoClient;
 const uri = `mongodb+srv://bazarUser:bazaruser12345@cluster0.b8m43.mongodb.net/bazarNiketonDatabase?retryWrites=true&w=majority`;
-const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const client = new MongoClient(uri);
 
 client.connect((err) => {
   const productsCollection = client
