@@ -22,8 +22,7 @@ client.connect((err) => {
   app.post("/addProduct", (req, res) => {
     const product = req.body;
     productsCollection.insertOne(product).then((result) => {
-      res.send(result.insertedCount > 0);
-      console.log("Product Added");
+      res.send(result.acknowledged);
     });
   });
 
@@ -53,7 +52,7 @@ client.connect((err) => {
   app.post("/addOder", (req, res) => {
     const newOrder = req.body;
     ordersCollection.insertOne(newOrder).then((result) => {
-      res.send(result.insertedCount > 0);
+      res.send(result.acknowledged);
     });
   });
 
